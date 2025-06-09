@@ -10,14 +10,22 @@ import { ChatModule } from './chat/chat.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
-    type: 'sqlite',
-    database: 'database.sqlite',
-    entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    synchronize: true,
-  }), UsersModule, AuthModule, ShopsModule, ItemsToSellModule, OrdersModule, ChatModule, ReviewsModule, NotificationsModule],
+  imports: [ConfigModule.forRoot({
+    isGlobal: true,
+  }),
+    DatabaseModule,
+    UsersModule,
+    AuthModule,
+    ShopsModule,
+    ItemsToSellModule,
+    OrdersModule,
+    ChatModule,
+    ReviewsModule,
+    NotificationsModule],
   controllers: [AppController],
   providers: [AppService],
 })
