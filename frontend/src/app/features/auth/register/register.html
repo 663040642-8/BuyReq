@@ -1,0 +1,65 @@
+<div class="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">
+  <div class="bg-white text-gray-700 rounded-3xl shadow-xl w-full max-w-md overflow-hidden">
+    <form class="p-10 space-y-6" [formGroup]="registerForm" (submit)="onSubmit()">
+      <h1 class="text-center text-3xl font-bold text-gray-900">Register</h1>
+
+      <!-- First Name -->
+      <div>
+        <label for="first-name" class="block text-sm font-medium mb-1">First Name</label>
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A8.003 8.003 0 0112 15a8.003 8.003 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <input type="text" formControlName="firstName" id="first-name" name="firstName" autocomplete="given-name"
+            class="w-full pl-10 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none"
+            placeholder="Your first name" required>
+        </div>
+      </div>
+
+      <!-- Last Name -->
+      <div>
+        <label for="last-name" class="block text-sm font-medium mb-1">Last Name</label>
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A8.003 8.003 0 0112 15a8.003 8.003 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <input type="text" formControlName="lastName" id="last-name" name="lastName" autocomplete="family-name"
+            class="w-full pl-10 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none"
+            placeholder="Your last name" required>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium mb-1">Email</label>
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 12H8m0 0l-4-4m4 4l-4 4m16-8l-4 4m4-4l-4-4" />
+          </svg>
+          <input type="email" formControlName="email" id="email" name="email" autocomplete="email"
+            class="w-full pl-10 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none"
+            placeholder="you@example.com" required>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label for="password" class="block text-sm font-medium mb-1">Password</label>
+        <div class="relative">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m6-6V9a6 6 0 10-12 0v2a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2v-6a2 2 0 00-2-2z" />
+          </svg>
+          <input type="password" formControlName="password" id="password" name="password" autocomplete="new-password"
+            class="w-full pl-10 py-2 border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none"
+            placeholder="********" required>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit"
+        class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 rounded-lg transition-colors">
+        Register Now
+      </button>
+    </form>
+  </div>
+</div>
