@@ -6,6 +6,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserResponseDto } from './dto/user-response.dto';
 
 @Controller('users')
 export class UsersController {
@@ -14,21 +15,22 @@ export class UsersController {
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles('admin')
     @Get()
-    getAllUserData() {
+    getAllUserData(): Promise<UserResponseDto[]> {
         return this.usersService.findAll();
     }
 
     @UseGuards(JwtAuthGuard)
     @Get('me')
-    async getProfile(@Req() req: Request) {
+    async getProfile(@Req() req: Request): Promise<UserResponseDto> {
         const user = req.user as JwtPayload;
-        const result = await this.usersService.findById(user.sub);
-        return result;
+        const userEntity = await this.usersService.findById(user.sub);
+        return new UserResponseDto(userEntity);
     }
 
     @UseGuards(JwtAuthGuard)
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-        return this.usersService.update(+id, updateUserDto);
+    @Patch('me')
+    async updateProfile(@Req() req: Request, @Body() updateUserDto: UpdateUserDto) {
+        const user = req.user as JwtPayload;  // ดึง user id จาก token
+        return this.usersService.update(user.sub, updateUserDto);
     }
 }

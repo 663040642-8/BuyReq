@@ -3,15 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { ShopsModule } from './shops/shops.module';
-import { ItemsToSellModule } from './items-to-sell/items-to-sell.module';
-import { OrdersModule } from './orders/orders.module';
-import { ChatModule } from './chat/chat.module';
-import { ReviewsModule } from './reviews/reviews.module';
-import { NotificationsModule } from './notifications/notifications.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
+import { BuyRequestModule } from './buy-request/buy-request.module';
+import { SellRequestModule } from './sell-request/sell-request.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -20,12 +15,9 @@ import { DatabaseModule } from './database/database.module';
     DatabaseModule,
     UsersModule,
     AuthModule,
-    ShopsModule,
-    ItemsToSellModule,
-    OrdersModule,
-    ChatModule,
-    ReviewsModule,
-    NotificationsModule],
+    BuyRequestModule,
+    SellRequestModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

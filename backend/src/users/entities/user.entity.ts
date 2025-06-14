@@ -1,12 +1,13 @@
-import { Shop } from 'src/shops/entities/shop.entity';
+import { BuyRequest } from 'src/buy-request/entities/buy-request.entity';
+import { SellRequest } from 'src/sell-request/entities/sell-request.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-export type UserRole = 'user' | 'admin' | 'shopOwner';
+export type UserRole = 'user' | 'admin';
 
 @Entity('users')
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column({ unique: true })
     email: string;
@@ -20,15 +21,24 @@ export class User {
     @Column()
     lastName: string;
 
+    @Column({ nullable: true, unique: true })
+    phone: string;
+
+    @Column({ nullable: true })
+    avatarUrl?: string;
+
+    @Column({ default: 'user' })
+    role: UserRole;
+
+    @OneToMany(() => BuyRequest, br => br.createdBy)
+    buyRequests: BuyRequest[];
+
+    @OneToMany(() => SellRequest, sr => sr.seller)
+    sellRequests: SellRequest[];
+
     @CreateDateColumn()
     createdAt: Date;
 
     @UpdateDateColumn()
     updatedAt: Date;
-    
-    @Column({ default: 'user' })
-    role: UserRole;
-
-    @OneToMany(() => Shop, (shop) => shop.owner)
-    shops: Shop[];
 }
