@@ -1,20 +1,20 @@
 import { BuyRequest } from '../entities/buy-request.entity';
 
-export class  BuyRequestResponseDto {
+export class BuyRequestResponseDto {
   id: string;
   title: string;
   description?: string;
   minPrice?: number;
   maxPrice?: number;
   quantity?: number;
-  createdAt: Date;
-  updatedAt: Date;
   createdBy: {
     id: string;
     firstName: string;
     lastName: string;
     phone: string;
   };
+  createdAt: Date;
+  updatedAt: Date;
 
   constructor(entity: BuyRequest) {
     this.id = entity.id;
@@ -23,8 +23,6 @@ export class  BuyRequestResponseDto {
     this.minPrice = entity.minPrice;
     this.maxPrice = entity.maxPrice;
     this.quantity = entity.quantity;
-    this.createdAt = entity.createdAt;
-    this.updatedAt = entity.updatedAt;
 
     this.createdBy = {
       id: entity.createdBy.id,
@@ -32,5 +30,8 @@ export class  BuyRequestResponseDto {
       lastName: entity.createdBy.lastName,
       phone: entity.createdBy.phone,
     };
+
+    this.createdAt = entity.createdAt;
+    this.updatedAt = entity.updatedAt;
   }
 }

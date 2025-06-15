@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+/* สำหรับ WebKit browsers (Chrome, Safari, Edge) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    /* Sometimes needed to remove extra space */
+}
+
+/* สำหรับ Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: none;
+}
+
+/* สำหรับ IE (ถ้ายังต้องการรองรับ) */
+input[type="number"]::-ms-clear {
+    display: none;
+}
+
+input[type="number"]::-ms-reveal {
+    display: none;
+}

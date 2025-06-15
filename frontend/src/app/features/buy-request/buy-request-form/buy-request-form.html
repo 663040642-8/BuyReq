@@ -1,0 +1,67 @@
+<div
+    class="min-w-screen min-h-screen bg-gradient-to-br from-gray-900 via-indigo-900 to-gray-800 flex items-center justify-center px-4 py-6">
+    <div class="bg-white text-gray-800 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+
+        <!-- FORM -->
+        <form class="p-8 space-y-6" [formGroup]="buyRequestForm" (submit)="onSubmit()">
+            <!-- Heading -->
+            <h1 class="text-center text-3xl font-extrabold text-indigo-700">สร้างคำขอซื้อ</h1>
+            <p class="text-center text-sm text-gray-500">กรอกข้อมูลที่ต้องการให้ครบถ้วน</p>
+
+            <!-- Title -->
+            <div>
+                <label for="title" class="block text-sm font-medium mb-1">หัวข้อ</label>
+                <input type="text" formControlName="title" id="title"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    placeholder="เช่น ต้องการซื้อขวดแก้ว" />
+                @if (buyRequestForm.get('title')?.invalid && (buyRequestForm.get('title')?.dirty ||
+                buyRequestForm.get('title')?.touched)) {
+                <div class="text-red-500 text-xs mt-1">
+                    @if (buyRequestForm.get('title')?.errors?.['required']) {
+                    <span>กรุณาระบุหัวข้อ</span>
+                    }
+                </div>
+                }
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label for="description" class="block text-sm font-medium mb-1">รายละเอียด (Optinal)</label>
+                <input type="text" formControlName="description" id="description"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    placeholder="เช่น ต้องการจำนวนมาก / ต้องการด่วน" />
+            </div>
+
+            <!-- Price Range -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="minPrice" class="block text-sm font-medium mb-1">ราคาต่ำสุด (Optinal)</label>
+                    <input type="number" formControlName="minPrice" id="minPrice" min="0"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                        placeholder="เช่น 10" />
+                </div>
+                <div>
+                    <label for="maxPrice" class="block text-sm font-medium mb-1">ราคาสูงสุด (Optinal)</label>
+                    <input type="number" formControlName="maxPrice" id="maxPrice" min="0"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                        placeholder="เช่น 50" />
+                </div>
+            </div>
+
+            <!-- Quantity -->
+            <div>
+                <label for="quantity" class="block text-sm font-medium mb-1">จำนวน (Optinal)</label>
+                <input type="number" formControlName="quantity" id="quantity" min="1"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    placeholder="ระบุจำนวน" />
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" [disabled]="buyRequestForm.invalid"
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-50">
+                ยืนยันคำขอซื้อ
+            </button>
+        </form>
+
+    </div>
+</div>

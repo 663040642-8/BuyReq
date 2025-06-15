@@ -1,0 +1,23 @@
+@if (user()) {
+  <div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden mt-6 p-6">
+    <div class="flex items-center space-x-4">
+      <div class="w-20 h-20 rounded-full bg-gray-200 overflow-hidden flex justify-center items-center">
+        <img [src]="user()?.avatarUrl || 'https://dummyimage.com/40x40/cccccc/666666&text=G_G'" alt="Avatar"
+             class="w-full h-full object-cover" />
+      </div>
+      <div>
+        <h2 class="text-2xl font-semibold text-gray-800">{{ fullName() }}</h2>
+        <p class="text-sm text-gray-400">ID: {{ user()?.id }}</p>
+      </div>
+    </div>
+
+    <div class="mt-6 space-y-2 text-gray-700">
+      <p><strong>Email:</strong> {{ user()?.email }}</p>
+      <p><strong>Phone:</strong> {{ user()?.phone }}</p>
+      <p><strong>Created At:</strong> {{ formattedCreatedAt() }}</p>
+      <p><strong>Last Updated:</strong> {{ formattedUpdatedAt() }}</p>
+    </div>
+  </div>
+} @else {
+  <div class="text-center py-10 text-gray-400 text-lg">Loading...</div>
+}

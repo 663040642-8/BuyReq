@@ -2,7 +2,7 @@ import { SellRequest } from "src/sell-request/entities/sell-request.entity";
 import { User } from "src/users/entities/user.entity";
 import { PrimaryGeneratedColumn, ManyToOne, Column, CreateDateColumn, UpdateDateColumn, Entity, OneToMany } from "typeorm";
 
-@Entity()
+@Entity('buy_requests')
 export class BuyRequest {
     @PrimaryGeneratedColumn('uuid')
     id: string;

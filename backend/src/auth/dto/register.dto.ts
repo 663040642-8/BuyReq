@@ -9,4 +9,8 @@ export class RegisterDto extends AuthBaseDto {
     @IsNotEmpty()
     @IsString()
     lastName: string;
+
+    @IsNotEmpty()
+    @IsString()
+    phone: string;
 }

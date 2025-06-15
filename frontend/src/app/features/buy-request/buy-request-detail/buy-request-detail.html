@@ -1,0 +1,57 @@
+<!-- Loading -->
+@if (loading()) {
+  <div class="text-center py-10 text-gray-500 text-lg">Loading...</div>
+}
+
+<!-- Buy Request Details -->
+@if (buyRequest()) {
+  <div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto mt-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">
+      {{ buyRequest()?.title }}
+    </h2>
+
+    <p class="text-gray-600 mb-2">
+      {{ buyRequest()?.description }}
+    </p>
+
+    <div class="text-gray-700 space-y-1 mb-4">
+      <p><span class="font-medium">Price:</span> {{ buyRequest()?.minPrice }} - {{ buyRequest()?.maxPrice }}</p>
+      <p><span class="font-medium">Quantity:</span> {{ buyRequest()?.quantity }}</p>
+      <p>
+        <span class="font-medium">Created By:</span>
+        {{ buyRequest()?.createdBy?.firstName }} {{ buyRequest()?.createdBy?.lastName }}
+      </p>
+    </div>
+
+    <!-- Interest Button -->
+    <button
+      (click)="showSellRequestForm.set(true)"
+      class="w-full md:w-auto mt-4 px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+    >
+      สนใจ
+    </button>
+  </div>
+}
+
+<!-- Modal -->
+@if (buyRequest() && showSellRequestForm()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm bg-black/30">
+    <div class="relative bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 overflow-y-auto max-h-[90vh]">
+
+      <!-- Close Button -->
+      <button
+        (click)="closeSellRequestForm()"
+        class="absolute top-2 right-3 text-gray-500 hover:text-red-600 text-2xl font-bold"
+      >
+        &times;
+      </button>
+
+      <!-- Sell Request Form -->
+      <app-sell-request-form
+        [buyRequestId]="buyRequest()!.id"
+        (close)="closeSellRequestForm()"
+      ></app-sell-request-form>
+
+    </div>
+  </div>
+}

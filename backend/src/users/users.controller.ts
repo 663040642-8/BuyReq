@@ -23,14 +23,14 @@ export class UsersController {
     @Get('me')
     async getProfile(@Req() req: Request): Promise<UserResponseDto> {
         const user = req.user as JwtPayload;
-        const userEntity = await this.usersService.findById(user.sub);
+        const userEntity = await this.usersService.getByIdOrThrow(user.sub);
         return new UserResponseDto(userEntity);
     }
 
     @UseGuards(JwtAuthGuard)
     @Patch('me')
     async updateProfile(@Req() req: Request, @Body() updateUserDto: UpdateUserDto) {
-        const user = req.user as JwtPayload;  // ดึง user id จาก token
+        const user = req.user as JwtPayload;
         return this.usersService.update(user.sub, updateUserDto);
     }
 }

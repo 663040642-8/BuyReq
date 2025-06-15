@@ -1,0 +1,88 @@
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-90 backdrop-blur-md shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <div class="flex-shrink-0">
+                <a routerLink="/"
+                    class="text-black font-bold text-2xl flex items-center gap-2 hover:text-indigo-700 transition">
+                    ♻️ BuyReq
+                </a>
+            </div>
+
+            <!-- Menu (desktop) -->
+            <div class="hidden md:block">
+                <div class="ml-10 flex items-center gap-6">
+                    <a routerLink="/"
+                        class="text-sm font-medium text-gray-800 hover:text-indigo-700 px-3 py-2 rounded-md transition">หน้าแรก</a>
+                    <a routerLink="/buy-request"
+                        class="text-sm font-medium text-gray-800 hover:text-indigo-700 px-3 py-2 rounded-md transition">ประกาศรับซื้อ</a>
+                    <a routerLink="/buy-request/create"
+                        class="text-sm font-medium text-gray-800 hover:text-indigo-700 px-3 py-2 rounded-md transition">โพสต์ประกาศ</a>
+                </div>
+            </div>
+
+            <!-- Right side (desktop) -->
+            <div class="hidden md:flex items-center gap-4">
+                @if (!isLoggedIn()) {
+                <a routerLink="/login"
+                    class="text-sm font-medium text-gray-800 hover:text-indigo-700 transition">เข้าสู่ระบบ</a>
+                <a routerLink="/register"
+                    class="text-sm font-medium text-gray-800 hover:text-indigo-700 transition">สมัครสมาชิก</a>
+                }
+                @if (isLoggedIn()) {
+                <a routerLink="/profile"
+                    class="flex items-center gap-2 text-sm font-medium text-gray-800 hover:text-indigo-700 transition">
+                    <img [src]="user()?.avatarUrl || 'https://dummyimage.com/40x40/cccccc/666666&text=G_G'" alt="Profile"
+                        class="w-6 h-6 rounded-full object-cover" />
+                    โปรไฟล์
+                </a>
+                <button (click)="logout()"
+                    class="text-sm font-medium text-red-600 hover:text-red-700 transition">ออกจากระบบ</button>
+                }
+            </div>
+
+            <!-- Hamburger button (mobile) -->
+            <div class="md:hidden">
+                <button (click)="toggleMenu()"
+                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-800 hover:text-indigo-700 transition">
+                    <span class="sr-only">Toggle menu</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" viewBox="0 0 24 24">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    @if (menuOpen()) {
+    <div class="md:hidden border-t border-gray-200">
+        <div class="px-4 py-3 space-y-2">
+            <a routerLink="/"
+                class="block text-gray-800 hover:text-indigo-700 px-3 py-2 rounded-md text-base font-medium transition">หน้าแรก</a>
+            <a routerLink="/buy-request"
+                class="block text-gray-800 hover:text-indigo-700 px-3 py-2 rounded-md text-base font-medium transition">ประกาศรับซื้อ</a>
+            <a routerLink="/shops"
+                class="block text-gray-800 hover:text-indigo-700 px-3 py-2 rounded-md text-base font-medium transition">ร้านรับซื้อ</a>
+            <a routerLink="/post-buy-request"
+                class="block text-gray-800 hover:text-indigo-700 px-3 py-2 rounded-md text-base font-medium transition">โพสต์ประกาศ</a>
+
+            @if (!isLoggedIn()) {
+            <a routerLink="/login"
+                class="block text-gray-800 hover:text-indigo-700 px-3 py-2 rounded-md text-base font-medium transition">เข้าสู่ระบบ</a>
+            <a routerLink="/register"
+                class="block text-gray-800 hover:text-indigo-700 px-3 py-2 rounded-md text-base font-medium transition">สมัครสมาชิก</a>
+            }
+            @if (isLoggedIn()) {
+            <a routerLink="/profile"
+                class="block text-gray-800 hover:text-indigo-700 px-3 py-2 rounded-md text-base font-medium transition">โปรไฟล์</a>
+            <button (click)="logout()"
+                class="block w-full text-left text-red-600 hover:text-red-700 px-3 py-2 rounded-md text-base font-medium transition">ออกจากระบบ</button>
+            }
+        </div>
+    </div>
+    }
+</nav>

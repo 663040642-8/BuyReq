@@ -22,7 +22,7 @@ export class SellRequestController {
     @Body() createSellRequestDto: CreateSellRequestDto,
     @User() payload: JwtPayload,
   ): Promise<SellRequestResponseDto> {
-    const user = await this.usersService.findById(payload.sub);
+    const user = await this.usersService.getByIdOrThrow(payload.sub);
     const entity = await this.sellRequestService.create(createSellRequestDto, user);
     return new SellRequestResponseDto(entity);
   }
@@ -46,7 +46,7 @@ export class SellRequestController {
     @Body() updateDto: UpdateSellRequestDto,
     @User() payload: JwtPayload,
   ): Promise<SellRequestResponseDto> {
-    const user = await this.usersService.findById(payload.sub);
+    const user = await this.usersService.getByIdOrThrow(payload.sub);
     const entity = await this.sellRequestService.update(id, updateDto, user);
     return new SellRequestResponseDto(entity);
   }

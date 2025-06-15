@@ -1,0 +1,39 @@
+<!-- Loading -->
+@if (loading()) {
+  <div class="text-center py-20 text-gray-500 text-lg">Loading...</div>
+}
+
+<!-- เมื่อโหลดเสร็จ -->
+@if (!loading()) {
+  <!-- Header + Add Button -->
+  <div class="max-w-2xl mx-auto mt-8 px-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-gray-800">รายการคำขอซื้อ</h1>
+    <a
+      [routerLink]="['/buy-request/create']"
+      class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg transition"
+    >
+      + เพิ่มคำขอซื้อ
+    </a>
+  </div>
+
+  <!-- รายการ BuyRequests -->
+  <div class="max-w-2xl mx-auto mt-6 space-y-4 px-4">
+    @for (buyRequest of buyRequests(); track buyRequest.id) {
+      <a
+        [routerLink]="['/buy-request', buyRequest.id]"
+        class="block bg-white shadow-md rounded-xl p-5 hover:bg-indigo-50 transition"
+      >
+        <h2 class="text-xl font-semibold text-indigo-700">{{ buyRequest.title }}</h2>
+
+        <div class="mt-2 text-gray-600 text-sm space-y-1">
+          <p><span class="font-medium">ช่วงราคา:</span> {{ buyRequest.minPrice }} - {{ buyRequest.maxPrice }} บาท</p>
+          <p><span class="font-medium">จำนวน:</span> {{ buyRequest.quantity }}</p>
+        </div>
+      </a>
+    } @empty {
+      <div class="text-center py-10 text-gray-400 text-lg">
+        ไม่มีคำขอซื้อที่พบ
+      </div>
+    }
+  </div>
+}

@@ -12,10 +12,9 @@ export class UsersService {
         private usersRepository: Repository<User>
     ) { }
 
-    async create(createUserDto: CreateUserDto): Promise<UserResponseDto> {
+    async create(createUserDto: CreateUserDto): Promise<User> {
         const user = this.usersRepository.create(createUserDto);
-        const savedUser = await this.usersRepository.save(user);
-        return new UserResponseDto(savedUser);
+        return await this.usersRepository.save(user);
     }
 
     async update(id: string, updateUserDto: UpdateUserDto): Promise<UserResponseDto> {
@@ -25,28 +24,28 @@ export class UsersService {
         }
 
         Object.assign(user, updateUserDto);
-        
+
         const updatedUser = await this.usersRepository.save(user);
         return new UserResponseDto(updatedUser);
     }
-    
-        async findAll(): Promise<UserResponseDto[]> {
-            const users = await this.usersRepository.find();
-            return users.map(user => new UserResponseDto(user));
-        }
 
-    async findByEmail(email: string): Promise<User> {
-        const user = await this.usersRepository.findOne({ where: { email } });
-        if (!user) {
-            throw new NotFoundException(`BuyRequest with email ${email} not found`);
-        }
-        return user;
+    async findAll(): Promise<UserResponseDto[]> {
+        const users = await this.usersRepository.find();
+        return users.map(user => new UserResponseDto(user));
     }
 
-    async findById(id: string): Promise<User> {
-        const user = await this.usersRepository.findOne({ where: { id } });
+    async findByEmail(email: string): Promise<User | null> {
+        return await this.usersRepository.findOne({ where: { email } });
+    }
+
+    async findById(id: string): Promise<User | null> {
+        return await this.usersRepository.findOne({ where: { id } });
+    }
+
+    async getByIdOrThrow(id: string): Promise<User> {
+        const user = await this.findById(id);
         if (!user) {
-            throw new NotFoundException(`${id} not found`);
+            throw new NotFoundException(`User with id ${id} not found`);
         }
         return user;
     }

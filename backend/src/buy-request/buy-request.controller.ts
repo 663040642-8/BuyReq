@@ -21,7 +21,7 @@ export class BuyRequestController {
     @Body() createBuyRequestDto: CreateBuyRequestDto,
     @User() payload: JwtPayload,
   ): Promise<BuyRequestResponseDto> {
-    const user = await this.usersService.findById(payload.sub);
+    const user = await this.usersService.getByIdOrThrow(payload.sub);
     const entity = await this.buyRequestService.create(createBuyRequestDto, user);
     return new BuyRequestResponseDto(entity);
   }
@@ -45,7 +45,7 @@ export class BuyRequestController {
     @Body() updateDto: UpdateBuyRequestDto,
     @User() payload: JwtPayload,
   ): Promise<BuyRequestResponseDto> {
-    const user = await this.usersService.findById(payload.sub);
+    const user = await this.usersService.getByIdOrThrow(payload.sub);
     const entity = await this.buyRequestService.update(id, updateDto, user);
     return new BuyRequestResponseDto(entity);
   }

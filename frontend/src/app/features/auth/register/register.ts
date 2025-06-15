@@ -1,25 +1,34 @@
 import { Component, inject } from '@angular/core';
 import { RegisterDto } from '../../../core/auth/auth-model';
 import { AuthService } from '../../../core/auth/auth-service';
-import { Router } from '@angular/router';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
 export class Register {
   auth = inject(AuthService);
   router = inject(Router);
+  fb = inject(FormBuilder);
 
-  registerForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', Validators.required),
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
-  });
+  registerForm = this.fb.nonNullable.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+    confirmPassword: ['', Validators.required],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    phone: ['', Validators.required],
+  }, { validators: this.passwordMatchValidator });
+
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordMismatch: true };
+  }
 
   onSubmit() {
     if (this.registerForm.invalid) {
@@ -27,12 +36,7 @@ export class Register {
       return;
     }
 
-    const data: RegisterDto = {
-      email: this.registerForm.get('email')!.value ?? '',
-      password: this.registerForm.get('password')!.value ?? '',
-      firstName: this.registerForm.get('firstName')!.value ?? '',
-      lastName: this.registerForm.get('lastName')!.value ?? '',
-    };
+    const data: RegisterDto = this.registerForm.getRawValue();
 
     this.auth.register(data).subscribe({
       next: () => {
